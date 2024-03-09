@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import locationPng from './location-pin.png';
+import rain from './rain.png'
+import clouds from "./clouds.png"
 
 function App() {
   const [data, setData] = useState({});
@@ -24,6 +26,7 @@ function App() {
 
         const result = await response.json();
         setData(result);
+        console.log(result)
         setSearched(true);
       } catch (error) {
         setError(error.message);
@@ -80,6 +83,21 @@ function App() {
                     ) : null}
                   </div>
                 </div>
+
+                {data.weather && data.weather.length > 0 && (
+          <div>
+            {data.weather[0].main === 'Clouds' && (
+              <img src={clouds} alt="clouds" />
+            )}
+            {data.weather[0].main === 'Rain' && (
+              <img src={rain} alt="rain" />
+            )}
+            {data.weather[0].main === 'Clear' && (
+              {/* Include an image for clear weather */}
+            )}
+            {/* Add more conditions for other weather types as needed */}
+          </div>
+        )}
 
                 <div className="city">
                   <h1>{data.name}</h1>
