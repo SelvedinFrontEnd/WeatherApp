@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import locationPng from './location-pin.png';
-import rain from './rain.png'
-import clouds from "./clouds.png"
 import rainBackground from "./rain-background.gif"
 import cloudsBackground from "./clouds-background.gif"
+import thunderBackground from "./thunder-background.gif"
+import snowBackground from "./snow-background.gif"
+import clearSky from "./clear-sky.jpg"
 
 function App() {
   const [data, setData] = useState({});
@@ -16,11 +17,15 @@ function App() {
     if (data.weather && data.weather.length > 0) {
       const weatherCondition = data.weather[0].main;
 
-      if (weatherCondition === 'Rain') {
+      if (weatherCondition === 'Rain' || weatherCondition === 'Drizzle') {
         document.body.style.backgroundImage = `url('${rainBackground}')`;
-        document.body.style.backgroundSize = 'cover'; // Optional, adjust based on your needs
-      } else if(weatherCondition === "Clouds") {
+        document.body.style.backgroundSize = 'cover';
+      } else if (weatherCondition === "Clouds" ) {
         document.body.style.backgroundImage = `url('${cloudsBackground}')`;
+      } else if (weatherCondition === "Clear") {
+        document.body.style.backgroundImage = `url('${clearSky}')`;
+      } else if (weatherCondition === "Thunder") {
+        document.body.style.backgroundImage = `url('${thunderBackground}')`;
       }
     }
   }, [data.weather]);
