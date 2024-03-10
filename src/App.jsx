@@ -112,6 +112,9 @@ function App() {
                     <img className="location-png" src={locationPng} alt="Location Pin" />
                   </div>
                 </div>
+                {data.weather ? 
+                  <div>{data.weather[0].description}</div>
+                : null}
 
                 <div className="other">
                   <div className="feels-like">
