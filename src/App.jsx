@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import locationPng from './location-pin.png';
 import rain from './rain.png'
 import clouds from "./clouds.png"
+import rainBackground from "./rain-background.gif"
+import cloudsBackground from "./clouds-background.gif"
 
 function App() {
   const [data, setData] = useState({});
@@ -9,6 +11,19 @@ function App() {
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (data.weather && data.weather.length > 0) {
+      const weatherCondition = data.weather[0].main;
+
+      if (weatherCondition === 'Rain') {
+        document.body.style.backgroundImage = `url('${rainBackground}')`;
+        document.body.style.backgroundSize = 'cover'; // Optional, adjust based on your needs
+      } else if(weatherCondition === "Clouds") {
+        document.body.style.backgroundImage = `url('${cloudsBackground}')`;
+      }
+    }
+  }, [data.weather]);
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=37b6d43ff7bc9c55e1a7c20cb8578395&units=metric`;
 
@@ -84,20 +99,7 @@ function App() {
                   </div>
                 </div>
 
-                {data.weather && data.weather.length > 0 && (
-          <div>
-            {data.weather[0].main === 'Clouds' && (
-              <img src={clouds} alt="clouds" />
-            )}
-            {data.weather[0].main === 'Rain' && (
-              <img src={rain} alt="rain" />
-            )}
-            {data.weather[0].main === 'Clear' && (
-              {/* Include an image for clear weather */}
-            )}
-            {/* Add more conditions for other weather types as needed */}
-          </div>
-        )}
+   
 
                 <div className="city">
                   <h1>{data.name}</h1>
